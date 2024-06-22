@@ -1,6 +1,4 @@
 <script>
-	export let data;
-
 	let name = '';
 	let github = '';
 	let email = '';
@@ -279,5 +277,11 @@
 		<h1 class="mb-3 font-display-serif text-2xl font-bold tracking-wide uppercase text-center">
 			Submitted!
 		</h1>
+		<p>
+			If you want a head start, feel free to look into the <a
+				href="https://learn.svelte.dev/tutorial/welcome-to-svelte"
+				class="text-blue-500">Svelte/SvelteKit Tutorial</a
+			>
+		</p>
 	{/if}
 </div>
