@@ -78,18 +78,22 @@
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		const response = await fetch('/', {
-			method: 'POST',
-			body: JSON.stringify(getFormData()),
-			headers: {
-				'Content-Type': 'application/json'
+		if (filled_out.length > 0) {
+			const response = await fetch('/', {
+				method: 'POST',
+				body: JSON.stringify(getFormData()),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const responseStatus = await response.json();
+
+			if (responseStatus) {
+				application_state = 'SUBMITTED';
 			}
-		});
-
-		const responseStatus = await response.json();
-
-		if (responseStatus) {
-			application_state = 'SUBMITTED';
+		} else {
+			alert('Make sure to fill out the When2meet!');
 		}
 	}
 
