@@ -5,7 +5,7 @@
 	let used_sveltekit = 'false';
 	let used_supabase = 'false';
 	let used_tailwind = 'false';
-	let filled_out = [];
+	let when2meet_filled_out = [];
 
 	let git_knowledge = 40;
 	let js_knowledge = 40;
@@ -17,7 +17,7 @@
 	let css_status = '';
 	let html_status = '';
 
-	let application_state = 'APPLY';
+	let application_state = 'IN PROGRESS';
 
 	const git_statuses = [
 		'What is a git?',
@@ -51,6 +51,11 @@
 		'I started before I was born'
 	];
 
+	$: git_status = git_statuses[Math.min(Math.floor(git_knowledge / 20), 4)];
+	$: js_status = js_statuses[Math.min(Math.floor(js_knowledge / 20), 4)];
+	$: css_status = css_statuses[Math.min(Math.floor(css_knowledge / 20), 4)];
+	$: html_status = html_statuses[Math.min(Math.floor(html_knowledge / 20), 4)];
+
 	function getFormData() {
 		return {
 			name,
@@ -66,17 +71,10 @@
 		};
 	}
 
-	function updateStatus() {
-		git_status = git_statuses[Math.min(Math.floor(git_knowledge / 20), 4)];
-		js_status = js_statuses[Math.min(Math.floor(js_knowledge / 20), 4)];
-		css_status = css_statuses[Math.min(Math.floor(css_knowledge / 20), 4)];
-		html_status = html_statuses[Math.min(Math.floor(html_knowledge / 20), 4)];
-	}
-
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		if (filled_out.length > 0) {
+		if (when2meet_filled_out.length > 0) {
 			const response = await fetch('/', {
 				method: 'POST',
 				body: JSON.stringify(getFormData()),
@@ -94,14 +92,12 @@
 			alert('Make sure to fill out the When2meet!');
 		}
 	}
-
-	updateStatus();
 </script>
 
 <ul></ul>
 
 <div class="mx-auto p-6 max-w-xl">
-	{#if application_state === 'APPLY'}
+	{#if application_state === 'IN PROGRESS'}
 		<h1 class="mb-3 font-display-serif text-2xl font-bold tracking-wide uppercase text-center">
 			Web Committee Survey
 		</h1>
@@ -125,47 +121,19 @@
 		</h1>
 
 		<p class="m-2">How well do you know Git?</p>
-		<input
-			type="range"
-			min="0"
-			max="100"
-			bind:value={git_knowledge}
-			class="range w-1/2 ml-5"
-			on:input={updateStatus}
-		/>
+		<input type="range" min="0" max="100" bind:value={git_knowledge} class="range w-1/2 ml-5" />
 		<p class="ml-5 italic text-gray-500">{git_status}</p>
 
 		<p class="m-2">How well do you know Javascript?</p>
-		<input
-			type="range"
-			min="0"
-			max="100"
-			bind:value={js_knowledge}
-			class="range w-1/2 ml-5"
-			on:input={updateStatus}
-		/>
+		<input type="range" min="0" max="100" bind:value={js_knowledge} class="range w-1/2 ml-5" />
 		<p class="ml-5 italic text-gray-500">{js_status}</p>
 
 		<p class="m-2">How well do you know CSS?</p>
-		<input
-			type="range"
-			min="0"
-			max="100"
-			bind:value={css_knowledge}
-			class="range w-1/2 ml-5"
-			on:input={updateStatus}
-		/>
+		<input type="range" min="0" max="100" bind:value={css_knowledge} class="range w-1/2 ml-5" />
 		<p class="ml-5 italic text-gray-500">{css_status}</p>
 
 		<p class="m-2">How well do you know HTML?</p>
-		<input
-			type="range"
-			min="0"
-			max="100"
-			bind:value={html_knowledge}
-			class="range w-1/2 ml-5"
-			on:input={updateStatus}
-		/>
+		<input type="range" min="0" max="100" bind:value={html_knowledge} class="range w-1/2 ml-5" />
 		<p class="ml-5 italic text-gray-500">{html_status}</p>
 
 		<p class="m-2">Have you used SvelteKit before?</p>
@@ -267,7 +235,7 @@
 					name="radio-12"
 					class="checkbox"
 					value="yes"
-					bind:group={filled_out}
+					bind:group={when2meet_filled_out}
 				/>
 			</label>
 		</div>
